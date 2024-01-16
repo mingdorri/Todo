@@ -1,4 +1,11 @@
 package com.example.todo.domain.card.dto
 
-class TodoResponse {
-}
+data class CardResponse(
+    val id: Long,
+    val title: String,
+    val content: String,
+    val name: String,
+    val createAt: String
+)
+
+
