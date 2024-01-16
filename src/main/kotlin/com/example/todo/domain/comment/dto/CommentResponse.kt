@@ -1,4 +1,6 @@
 package com.example.todo.domain.comment.dto
 
-class CommentResponse {
-}
+data class CommentResponse (
+    val id : Long,
+    val content : String
+)
