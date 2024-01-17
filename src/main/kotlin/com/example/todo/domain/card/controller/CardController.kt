@@ -3,6 +3,8 @@ package com.example.todo.domain.card.controller
 import com.example.todo.domain.card.dto.CardResponse
 import com.example.todo.domain.card.dto.CreateCardRequest
 import com.example.todo.domain.card.dto.UpdateCardRequest
+import com.example.todo.domain.card.service.CardService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,24 +17,31 @@ import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping("/todos")
 @RestController
-class CardController {
+class CardController(
+    private val cardService: CardService
+) {
 
     @GetMapping
     fun getCardList(): ResponseEntity<List<CardResponse>> {
-        TODO()
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(cardService.getAllCardList())
     }
 
     @GetMapping("/{todosId}")
     fun getCard(@PathVariable todosId: Long
     ): ResponseEntity<CardResponse> {
-        TODO()
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(cardService.getCardById(todosId))
     }
 
     @PostMapping
     fun createCard(
         @RequestBody createCardRequest: CreateCardRequest
     ): ResponseEntity<CardResponse> {
-        TODO()
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(cardService.createCard(createCardRequest))
     }
 
     @PutMapping("/{todosId}")
@@ -40,12 +49,17 @@ class CardController {
         @PathVariable todosId: Long,
         @RequestBody updateCardRequest: UpdateCardRequest
     ): ResponseEntity<CardResponse> {
-        TODO()
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(cardService.updateCard(todosId,updateCardRequest))
     }
 
     @DeleteMapping("/{todosId}")
-    fun deleteCard(@PathVariable todosId: Long){
-        TODO()
+    fun deleteCard(@PathVariable todosId: Long): ResponseEntity<Unit> {
+        cardService.deleteCard(todosId)
+        return ResponseEntity
+            .status(HttpStatus.NO_CONTENT)
+            .build()
     }
 
 }
