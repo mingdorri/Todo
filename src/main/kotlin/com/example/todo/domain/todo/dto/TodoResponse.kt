@@ -1,6 +1,6 @@
-package com.example.todo.domain.card.dto
+package com.example.todo.domain.todo.dto
 
-data class CardResponse(
+data class TodoResponse(
     val id: Long,
     val title: String,
     val content: String,

@@ -1,12 +1,14 @@
-package com.example.todo.domain.card.controller
+package com.example.todo.domain.todo.controller
 
-import com.example.todo.domain.card.dto.CardResponse
-import com.example.todo.domain.card.dto.CreateCardRequest
-import com.example.todo.domain.card.dto.UpdateCardRequest
-import com.example.todo.domain.card.service.CardService
+import com.example.todo.domain.exception.ModelNotFoundException
+import com.example.todo.domain.todo.dto.TodoResponse
+import com.example.todo.domain.todo.dto.CreateTodoRequest
+import com.example.todo.domain.todo.dto.UpdateTodoRequest
+import com.example.todo.domain.todo.service.TodoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -17,49 +19,52 @@ import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping("/todos")
 @RestController
-class CardController(
-    private val cardService: CardService
+class TodoController(
+    private val todoService: TodoService
 ) {
 
     @GetMapping
-    fun getCardList(): ResponseEntity<List<CardResponse>> {
+    fun getCardList(): ResponseEntity<List<TodoResponse>> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(cardService.getAllCardList())
+            .body(todoService.getAllCardList())
     }
 
     @GetMapping("/{todosId}")
     fun getCard(@PathVariable todosId: Long
-    ): ResponseEntity<CardResponse> {
+    ): ResponseEntity<TodoResponse> {
         return ResponseEntity.status(HttpStatus.OK)
-            .body(cardService.getCardById(todosId))
+            .body(todoService.getCardById(todosId))
     }
 
     @PostMapping
     fun createCard(
-        @RequestBody createCardRequest: CreateCardRequest
-    ): ResponseEntity<CardResponse> {
+        @RequestBody createTodoRequest: CreateTodoRequest
+    ): ResponseEntity<TodoResponse> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(cardService.createCard(createCardRequest))
+            .body(todoService.createCard(createTodoRequest))
     }
 
     @PutMapping("/{todosId}")
     fun updateCard(
         @PathVariable todosId: Long,
-        @RequestBody updateCardRequest: UpdateCardRequest
-    ): ResponseEntity<CardResponse> {
+        @RequestBody updateTodoRequest: UpdateTodoRequest
+    ): ResponseEntity<TodoResponse> {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(cardService.updateCard(todosId,updateCardRequest))
+            .body(todoService.updateCard(todosId,updateTodoRequest))
     }
 
     @DeleteMapping("/{todosId}")
     fun deleteCard(@PathVariable todosId: Long): ResponseEntity<Unit> {
-        cardService.deleteCard(todosId)
+        todoService.deleteCard(todosId)
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
             .build()
     }
+
+
+
 
 }
